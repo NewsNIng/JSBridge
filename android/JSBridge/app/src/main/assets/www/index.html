@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JSbridge测试</title>
+</head>
+<body>
+    <div>
+        <button onclick="syncTest()"> js -> native 同步请求: syncTest</button>
+        <button onclick="asyncTest()">js -> native 异步请求: asyncTest</button>
+
+        <h4>插件例子：</h4>
+        <button onclick="showToastByJSBridge()">showToastByJSBridge</button>
+    </div>
+    <script src="jsBridge.js"></script>
+</body>
+</html>

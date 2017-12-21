@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget version="1.0.0">
+    <!--测试插件-->
+    <feature name="Test">
+        <param name="android-package" value="io.github.zhaomenghuan.plugins.test.TestFeatureImpl" />
+        <param name="onload" value="true" />
+    </feature>
+
+    <!--原生界面-->
+    <feature name="NativeUI">
+        <param name="android-package" value="io.github.zhaomenghuan.plugins.nativeui.NativeUIFeatureImpl" />
+        <param name="onload" value="true" />
+    </feature>
+    <!--原生对象-->
+    <feature name="NativeObject">
+        <param name="android-package" value="io.github.zhaomenghuan.plugins.nativeobject.NativeObjectFeatureImpl" />
+    </feature>
+</widget>
