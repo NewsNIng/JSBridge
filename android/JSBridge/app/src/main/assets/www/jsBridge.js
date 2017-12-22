@@ -1,6 +1,4 @@
 (function(window) {
-    var JSBRIDGE_PROTOCOL = 'JSBridge:';
-
     var utils = {
         typeName: function(val) {
             return Object.prototype.toString.call(val).slice(8, -1);
@@ -8,6 +6,7 @@
     }
 
     window.JSBridge = {
+        JSBRIDGE_PROTOCOL: 'JSBridge:',
         callbackId: Math.floor(Math.random() * 2000000000),
         callbacks: {},
         callbackStatus: {
@@ -43,15 +42,7 @@
             }
         },
         exec: function(success, fail, service, action, args) {
-            // If args is not provided, default to an empty array
             args = args || [];
-
-            // Process any ArrayBuffers in the args into a string.
-            for (var i = 0; i < args.length; i++) {
-                if (utils.typeName(args[i]) == 'ArrayBuffer') {
-                    args[i] = base64.fromArrayBuffer(args[i]);
-                }
-            }
 
             var callbackId = service + JSBridge.callbackId++,
                 argsJson = JSON.stringify(args);
@@ -59,27 +50,12 @@
                 JSBridge.callbacks[callbackId] = {success:success, fail:fail};
             }
 
-            return prompt(args, JSBRIDGE_PROTOCOL + JSON.stringify([service, action, callbackId]))
+            return prompt(args, JSBridge.JSBRIDGE_PROTOCOL + JSON.stringify([service, action, callbackId]))
+        },
+        execSync: function(service, action, args) {
+            var ret = JSBridge.exec(null, null, service, action, args);
+            return ret?window.eval(ret): null;
         }
     }
 
-
 })(window);
-
-// toast
-function showToastByJSBridge() {
-    JSBridge.exec(null, null, "NativeUI", "showToast", ["hello world", "L"]);
-}
-
-// 同步测试
-function syncTest() {
-    var str = JSBridge.exec(null, null, "Test", "syncTest", ["hello world"]);
-    alert(str);
-}
-
-// 异步测试
-function asyncTest() {
-    JSBridge.exec(function(str) {
-        alert(JSON.stringify(str));
-    }, null, "Test", "asyncTest", ["hello world"]);
-}

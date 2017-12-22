@@ -1,9 +1,3 @@
-/*
-    作者：赵梦欢
-    时间：2017-9-15
-    功能：读取插件配置(plugins.xml)
-*/
-
 package io.github.zhaomenghuan.jsbridge;
 
 import android.content.Context;

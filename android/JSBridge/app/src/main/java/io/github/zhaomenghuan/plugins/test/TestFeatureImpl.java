@@ -22,7 +22,7 @@ public class TestFeatureImpl extends JSBridgePlugin {
             e.printStackTrace();
         }
 
-        return jsonObject.toString();
+        return callbackContext.execSync(jsonObject);
     }
 
     public void asyncTest(WebView webView, JSONArray array, CallbackContext callbackContext) {

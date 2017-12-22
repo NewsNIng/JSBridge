@@ -31,6 +31,25 @@ public class CallbackContext {
         return callbackId;
     }
 
+    public String execSync(String value, boolean isString) {
+        StringBuilder sb = new StringBuilder("(function(){return ");
+        if(isString) {
+            sb.append("\'").append(value).append("\';");
+        } else {
+            sb.append(value).append(";");
+        }
+        sb.append("})()");
+        return sb.toString();
+    }
+
+    public String execSync(JSONObject value) {
+        return execSync(value.toString(), false);
+    }
+
+    public String execSync(String value) {
+        return execSync(value, true);
+    }
+
     public void sendPluginResult(PluginResult pluginResult) {
         synchronized (this) {
             if (finished) {
