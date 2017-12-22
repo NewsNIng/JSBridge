@@ -13,7 +13,7 @@ jsBridge.loadUrl("file:///android_asset/www/index.html");
 
 ## 用法
 
-### JS层调用Java层
+### JS层调用Java层
 
 #### JS 部分
 
@@ -63,7 +63,7 @@ public void asyncTest(WebView webView, JSONArray array, CallbackContext callback
 }
 ```
 
-### Java层调用JS层
+### Java层调用JS层
 
 Android 原生提供了执行JavaScript的API，可以进一步封装：
 
@@ -109,7 +109,7 @@ document.addEventListener("titleUpdate", function(msg) {
 
 - [x] Android: JS 与 Java 通信机制
 - [ ] Android: JS 反射调用原生API的机制
-- [ ] Android: 原生UI引擎
+- [ ] Android: 原生UI引擎
 - [ ] iOS: JS 与 OC 通信机制
 - [ ] iOS: JS 反射调用原生API的机制
-- [ ] iOS: 原生UI引擎
+- [ ] iOS: 原生UI引擎
