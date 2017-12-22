@@ -1,10 +1,4 @@
-(function(window) {
-    var utils = {
-        typeName: function(val) {
-            return Object.prototype.toString.call(val).slice(8, -1);
-        }
-    }
-
+(function (window) {
     window.JSBridge = {
         JSBRIDGE_PROTOCOL: 'JSBridge:',
         callbackId: Math.floor(Math.random() * 2000000000),
@@ -21,13 +15,13 @@
             JSON_EXCEPTION: 8,
             ERROR: 9
         },
-        fireDocumentEvent: function(name, data) {
+        fireDocumentEvent: function (name, data) {
             var event = document.createEvent('Event');
             event.initEvent(name, true, true);
             event.arguments = data;
             document.dispatchEvent(event);
         },
-        callbackFromNative: function(callbackId, status, args, keepCallback) {
+        callbackFromNative: function (callbackId, status, args, keepCallback) {
             var callback = JSBridge.callbacks[callbackId];
             if (callback) {
                 if (status == JSBridge.callbackStatus.OK) {
@@ -41,20 +35,20 @@
                 }
             }
         },
-        exec: function(success, fail, service, action, args) {
+        exec: function (success, fail, service, action, args) {
             args = args || [];
 
             var callbackId = service + JSBridge.callbackId++,
                 argsJson = JSON.stringify(args);
             if (success || fail) {
-                JSBridge.callbacks[callbackId] = {success:success, fail:fail};
+                JSBridge.callbacks[callbackId] = { success: success, fail: fail };
             }
 
             return prompt(args, JSBridge.JSBRIDGE_PROTOCOL + JSON.stringify([service, action, callbackId]))
         },
-        execSync: function(service, action, args) {
+        execSync: function (service, action, args) {
             var ret = JSBridge.exec(null, null, service, action, args);
-            return ret?window.eval(ret): null;
+            return ret ? window.eval(ret) : null;
         }
     }
 

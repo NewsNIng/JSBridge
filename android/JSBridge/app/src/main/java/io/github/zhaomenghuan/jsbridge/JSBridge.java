@@ -15,11 +15,11 @@ import org.json.JSONException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 
 import io.github.zhaomenghuan.jsbridge.engine.JSBridgeWebChromeClient;
+import io.github.zhaomenghuan.utils.JSUtil;
 
 public class JSBridge {
     private static String TAG = "JSBridge";
@@ -121,8 +121,15 @@ public class JSBridge {
         return ret;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-    public Object jsCallJava(WebView webView, String message, String defaultValue) {
+    /**
+     * 调用原生方法
+     *
+     * @param webView
+     * @param message
+     * @param defaultValue
+     * @return
+     */
+    public Object exec(WebView webView, String message, String defaultValue) {
         String JSBRIDGE_PROTOCOL = "JSBridge:";
 
         if (defaultValue != null && defaultValue.startsWith(JSBRIDGE_PROTOCOL)) {
@@ -153,6 +160,15 @@ public class JSBridge {
         }
 
         return null;
+    }
+
+    /**
+     * 执行JavaScript
+     *
+     * @param js
+     */
+    public void evaluateJavascript(String js) {
+        JSUtil.evaluateJavascript(mWebView, js);
     }
 
     /**

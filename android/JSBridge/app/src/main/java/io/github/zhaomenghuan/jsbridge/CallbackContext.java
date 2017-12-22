@@ -6,6 +6,8 @@ import android.webkit.WebView;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import io.github.zhaomenghuan.utils.JSUtil;
+
 public class CallbackContext {
     private static final String TAG = "CallbackContext";
 
@@ -31,47 +33,20 @@ public class CallbackContext {
         return callbackId;
     }
 
-    public String execSync(String value, boolean isString) {
-        StringBuilder sb = new StringBuilder("(function(){return ");
-        if(isString) {
-            sb.append("\'").append(value).append("\';");
-        } else {
-            sb.append(value).append(";");
-        }
-        sb.append("})()");
-        return sb.toString();
+    public String execSync(String value) {
+        return JSUtil.wrapJsVar(value, true);
+    }
+
+    public String execSync(int value) {
+        return JSUtil.wrapJsVar(Integer.toString(value), false);
+    }
+
+    public String execSync(JSONArray value) {
+        return JSUtil.wrapJsVar(value.toString(), false);
     }
 
     public String execSync(JSONObject value) {
-        return execSync(value.toString(), false);
-    }
-
-    public String execSync(String value) {
-        return execSync(value, true);
-    }
-
-    public void sendPluginResult(PluginResult pluginResult) {
-        synchronized (this) {
-            if (finished) {
-                Log.w(TAG, "Attempted to send a second callback for ID: " + callbackId + "\nResult was: " + pluginResult.getMessage());
-                return;
-            } else {
-                finished = !pluginResult.getKeepCallback();
-            }
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("JSBridge.callbackFromNative('")
-                .append(callbackId)
-                .append("',")
-                .append(pluginResult.getStatus())
-                .append(",[")
-                .append(pluginResult.getMessage())
-                .append("],")
-                .append(pluginResult.getKeepCallback())
-                .append(");");
-
-        webView.loadUrl("javascript:" + sb.toString(), null);
+        return JSUtil.wrapJsVar(value.toString(), false);
     }
 
     /**
@@ -151,5 +126,29 @@ public class CallbackContext {
      */
     public void error(int message) {
         sendPluginResult(new PluginResult(PluginResult.Status.ERROR, message));
+    }
+
+    public void sendPluginResult(PluginResult pluginResult) {
+        synchronized (this) {
+            if (finished) {
+                Log.w(TAG, "Attempted to send a second callback for ID: " + callbackId + "\nResult was: " + pluginResult.getMessage());
+                return;
+            } else {
+                finished = !pluginResult.getKeepCallback();
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("JSBridge.callbackFromNative('")
+                .append(callbackId)
+                .append("',")
+                .append(pluginResult.getStatus())
+                .append(",[")
+                .append(pluginResult.getMessage())
+                .append("],")
+                .append(pluginResult.getKeepCallback())
+                .append(");");
+
+        webView.loadUrl("javascript:" + sb);
     }
 }

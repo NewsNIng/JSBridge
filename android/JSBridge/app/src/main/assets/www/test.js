@@ -11,7 +11,7 @@ function syncTest() {
 
 // 异步测试
 function asyncTest() {
-    JSBridge.exec(function(message) {
+    JSBridge.exec(function (message) {
         alert(message.name);
     }, null, "Test", "asyncTest", ["hello world"]);
 }
