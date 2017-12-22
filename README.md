@@ -65,7 +65,7 @@ public void asyncTest(WebView webView, JSONArray array, CallbackContext callback
 
 ### Java层调用JS层
 
-Android 原生提供了执行JavaScript的API，可以进一步封装：
+Android 原生提供了执行JavaScript的API，可以进一步封装：
 
 ``` java
 public static void evaluateJavascript(WebView webView, String js) {
