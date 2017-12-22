@@ -37,7 +37,7 @@ public String syncTest(WebView webView, JSONArray array, CallbackContext callbac
 }
 ```
 
-#### 同步调用
+#### 异步调用
 
 ``` java
 public void asyncTest(WebView webView, JSONArray array, CallbackContext callbackContext) {
